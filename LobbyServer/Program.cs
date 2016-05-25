@@ -55,6 +55,8 @@ namespace LobbyServer
                 ZNet.MasterInfo[] svr_array;
                 m_Core.GetServerList(server_type, out svr_array);
 
+                if (svr_array == null)
+                    return true;
 
                 // 해당 서버 타입의 서버가 여러개 존재할 수도 있으므로...
                 foreach (var obj in svr_array)
