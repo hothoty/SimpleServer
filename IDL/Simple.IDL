@@ -1,0 +1,20 @@
+
+// namespace이름과 사용할 패킷ID의 시작 번호를 정의합니다
+namespace Rmi 0
+{
+	// 최초 로그인 요청할 패킷을 정의합니다
+	request_Login(string name, string pass);
+
+
+	// 최초 로그인 요청에 응답할 패킷을 정의합니다
+	reponse_Login(bool bResult);
+
+
+	// 서버 이동을 요청하는 패킷을 정의합니다
+	server_move(int server_type);
+
+
+
+	// 채팅 패킷
+	Chat(string txt);
+}

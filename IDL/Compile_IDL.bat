@@ -1,0 +1,1 @@
+..\IDLCompiler.exe Simple.IDL RemoteClass ..\SimpleUnityClient\Assets\idl
