@@ -96,11 +96,11 @@ namespace LoginServer
                             else
                             {
                                 Console.WriteLine("[DB로그인] 인증진행중...\n");
-                                if (result_db.StateOnline) // 이미 로그인한 상태 --> 중복 로그인 오류
+                                /*if (result_db.StateOnline) // 이미 로그인한 상태 --> 중복 로그인 오류
                                 {
                                     return 2;
                                 }
-                                else if (result_db.PassWord == pass) // 암호 검사
+                                else*/ if (result_db.PassWord == pass) // 암호 검사
                                 {
                                     // 암호검사 통과 -> 해당 계정을로그인 상태로 변경
                                     if (Simple.Data.Database.Open().UserInfo.UpdateByUserUUID(UserUUID: result_db.UserUUID, StateOnline: true) == 1)
@@ -486,3 +486,48 @@ namespace LoginServer
         }
     }
 }
+
+
+// SQL 테이블 생성 스크립트 : NetServerCommon.Use_DB 항목 사용할때 필요
+/*
+USE[TestDB]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE[dbo].[Userinfo](
+	[UserUUID]
+[uniqueidentifier]
+NOT NULL,
+
+    [UserName] [varchar](50) NOT NULL,
+
+[PassWord] [varchar](50) NOT NULL,
+
+[CashMoney] [int]
+NOT NULL CONSTRAINT[DF_Userinfo_cash] DEFAULT((0)),
+	[GameMoney]
+[int]
+NOT NULL CONSTRAINT[DF_Userinfo_money] DEFAULT((500)),
+	[StateOnline]
+[bit]
+NOT NULL CONSTRAINT[DF_Userinfo_is_online] DEFAULT((0)),
+ CONSTRAINT[PK_Userinfo] PRIMARY KEY CLUSTERED
+(
+   [UserUUID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]
+) ON[PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+*/
+
