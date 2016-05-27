@@ -171,6 +171,14 @@ namespace RoomServer
                 Console.WriteLine("move server start  {0} {1} {2} {3}", rc.data.userID, rc.data.money_cash, rc.data.money_game, rc.data.temp);
             };
 
+
+            // 주기적으로 업데이트할 필요가 있는 내용들...
+            m_Core.update_event_handler = () =>
+            {
+
+            };
+
+
             // 예외상황등에 발생하는 이벤트들을 처리합니다  
             m_Core.message_handler = (ZNet.ResultInfo result) =>
             {
@@ -256,6 +264,10 @@ namespace RoomServer
 
             // 서버와 클라이언트간의 프로토콜 버전 내용입니다, 서로 다른 경우 경고 메세지 이벤트가 발생됩니다
             param.m_ProtocolVersion = UnityCommon.Join.protocol_ver;
+
+
+            // 업데이트 콜백 이벤트 시간을 설정합니다
+            param.m_UpdateTimeMs = 50;
 
 
             // 클라이언트의 반응이 없을경우 내부적으로 접속을 해제시킬 시간을 설정합니다(초단위)
