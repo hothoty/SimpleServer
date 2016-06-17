@@ -114,7 +114,7 @@ namespace Server.User
                     }
                     else
                     {
-                        // 다른 서버는 일반입장 불가 -> 서버이동으로만 입장 가능
+                        form.printf("로그인 서버외의 서버에서 일반 입장은 허용하지 않습니다");
                     }
                 }
 
@@ -241,6 +241,18 @@ namespace Server.User
                 //    master_info.m_Addr.m_port
                 //    ));
             };
+        }
+
+        protected override void AfterStart()
+        {
+            base.AfterStart();
+
+            m_Core.MasterConnect(
+                NetServerCommon.MasterServerConnect.master_ipaddr,
+                NetServerCommon.MasterServerConnect.master_portnum,
+                this.Name,
+                (int)this.Type
+                );
         }
     }
 }

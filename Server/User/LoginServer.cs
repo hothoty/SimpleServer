@@ -8,7 +8,7 @@ using ZNet;
 
 namespace Server.User
 {
-    public partial class LoginServer : UserServer
+    class LoginServer : UserServer
     {
         public LoginServer(FormServer f, UnityCommon.Server s, int portnum) : base(f, s, portnum)
         {
@@ -17,8 +17,11 @@ namespace Server.User
         protected override void BeforeStart(out StartOption param)
         {
             base.BeforeStart(out param);
-            
+
+
+            // 접속을 받을 IP
             param.m_IpAddressListen = UnityCommon.Join.ipaddr;
+
 
             // 접속을 받을 포트
             param.m_PortListen = UnityCommon.Join.portnum;
@@ -162,17 +165,49 @@ namespace Server.User
                 return true;
             };
         }
-
-        protected override void AfterStart()
-        {
-            base.AfterStart();
-
-            m_Core.MasterConnect(
-                NetServerCommon.MasterServerConnect.master_ipaddr,
-                NetServerCommon.MasterServerConnect.master_portnum,
-                this.Name,
-                (int)this.Type
-                );
-        }
     }
 }
+
+
+// SQL 테이블 생성 스크립트 : NetServerCommon.Use_DB 항목 사용할때 필요
+/*
+USE[TestDB]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE[dbo].[Userinfo](
+	[UserUUID]
+[uniqueidentifier]
+NOT NULL,
+
+    [UserName] [varchar](50) NOT NULL,
+
+[PassWord] [varchar](50) NOT NULL,
+
+[CashMoney] [int]
+NOT NULL CONSTRAINT[DF_Userinfo_cash] DEFAULT((0)),
+	[GameMoney]
+[int]
+NOT NULL CONSTRAINT[DF_Userinfo_money] DEFAULT((500)),
+	[StateOnline]
+[bit]
+NOT NULL CONSTRAINT[DF_Userinfo_is_online] DEFAULT((0)),
+ CONSTRAINT[PK_Userinfo] PRIMARY KEY CLUSTERED
+(
+   [UserUUID] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON[PRIMARY]
+) ON[PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+*/
