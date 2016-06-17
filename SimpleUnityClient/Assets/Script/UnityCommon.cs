@@ -23,9 +23,10 @@ namespace UnityCommon
     /// </summary>
     public enum Server : int
     {
-        None = 0,
+        None = -1,
         Login,
         Lobby,
-        Room
+        Room,
+        Master
     }
 }
