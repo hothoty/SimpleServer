@@ -4,39 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetServerCommon
+namespace Server
 {
     public class Var
     {
         public static readonly bool Use_DB = false;
-    }
-
-    /// <summary>
-    /// 마스터 서버 관련 정보
-    /// </summary>
-    public class MasterServerConnect
-    {
-        public static string master_ipaddr = "127.0.0.1";
-        public static readonly UInt16 master_portnum = 35000;
-    }
-
-
-    /// <summary>
-    /// 클라이언트가 접속할 로비서버의 주소
-    /// </summary>
-    public class Lobby
-    {
-        public static readonly string ipaddr = "127.0.0.1";
-        public static readonly UInt16 portnum = 22000;
-    }
-
-    /// <summary>
-    /// 클라이언트가 접속할 룸서버의 주소
-    /// </summary>
-    public class Room
-    {
-        public static readonly string ipaddr = "127.0.0.1";
-        public static readonly UInt16 portnum = 25000;
     }
 
 
@@ -65,7 +37,7 @@ namespace NetServerCommon
     }
 
 
-    public class Common
+    public class UserData
     {
         // 서버이동시 동기화할 유저 데이터 구성
         static public void UserDataMove_Start(CUser rc, out ZNet.ArrByte buffer)
@@ -98,7 +70,7 @@ namespace NetServerCommon
             data.joined = true;
         }
 
-        
+
         /// <summary>
         /// 여러가지 상태를 출력합니다
         /// </summary>

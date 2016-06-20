@@ -18,8 +18,8 @@ namespace Server.Master
         {
             param = new StartOption();
 
-            param.m_IpAddressListen = NetServerCommon.MasterServerConnect.master_ipaddr;
-            param.m_PortListen = NetServerCommon.MasterServerConnect.master_portnum;
+            param.m_IpAddressListen = Properties.Settings.Default.MasterIp;
+            param.m_PortListen = Properties.Settings.Default.MasterPort;
             param.m_MaxConnectionCount = 5000;
 
             m_Core.SetKeepAliveOption(60);

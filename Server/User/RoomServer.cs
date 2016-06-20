@@ -19,17 +19,8 @@ namespace Server.User
             base.BeforeStart(out param);
 
 
-            // 접속을 받을 IP
-            param.m_IpAddressListen = NetServerCommon.Room.ipaddr;
-
-
-            // 접속을 받을 포트
-            param.m_PortListen = NetServerCommon.Room.portnum;
-
-
             // 업데이트 콜백 이벤트 시간을 설정합니다
             param.m_UpdateTimeMs = 50;
-
 
 
             // 주기적으로 업데이트할 필요가 있는 내용들...

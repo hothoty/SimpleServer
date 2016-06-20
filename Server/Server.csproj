@@ -88,6 +88,7 @@
     <Compile Include="Master\MasterServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserData.cs" />
     <Compile Include="User\LobbyServer.cs" />
     <Compile Include="User\LoginServer.cs" />
     <Compile Include="User\RoomServer.cs" />
@@ -125,10 +126,6 @@
     <ProjectReference Include="..\NetCommon\NetCommon.csproj">
       <Project>{4907b7e3-033f-4fa9-91f9-f8673e20bd01}</Project>
       <Name>NetCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NetServerCommon\NetServerCommon.csproj">
-      <Project>{50159e40-abb9-4d1c-bac6-87d8fd3decb8}</Project>
-      <Name>NetServerCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
