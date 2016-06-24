@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCommon", "NetCommon\NetCommon.csproj", "{4907B7E3-033F-4FA9-91F9-F8673E20BD01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetServerCommon", "NetServerCommon\NetServerCommon.csproj", "{50159E40-ABB9-4D1C-BAC6-87D8FD3DECB8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{EFD90C7F-B5EF-4295-9AD1-375E38EAA12B}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{4907B7E3-033F-4FA9-91F9-F8673E20BD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4907B7E3-033F-4FA9-91F9-F8673E20BD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4907B7E3-033F-4FA9-91F9-F8673E20BD01}.Release|Any CPU.Build.0 = Release|Any CPU
-		{50159E40-ABB9-4D1C-BAC6-87D8FD3DECB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50159E40-ABB9-4D1C-BAC6-87D8FD3DECB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50159E40-ABB9-4D1C-BAC6-87D8FD3DECB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50159E40-ABB9-4D1C-BAC6-87D8FD3DECB8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EFD90C7F-B5EF-4295-9AD1-375E38EAA12B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EFD90C7F-B5EF-4295-9AD1-375E38EAA12B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFD90C7F-B5EF-4295-9AD1-375E38EAA12B}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -11,7 +11,7 @@ namespace Server.User
     public class UserServer : Base.BaseServer
     {
         // 클라이언트 목록
-        public Dictionary<ZNet.RemoteID, NetServerCommon.CUser> RemoteClients = new Dictionary<ZNet.RemoteID, NetServerCommon.CUser>();
+        public Dictionary<ZNet.RemoteID, CUser> RemoteClients = new Dictionary<ZNet.RemoteID, CUser>();
 
 
 
@@ -22,6 +22,10 @@ namespace Server.User
         protected override void BeforeStart(out StartOption param)
         {
             param = new StartOption();
+
+
+            param.m_IpAddressListen = ListenAddr.m_ip;
+            param.m_PortListen = ListenAddr.m_port;
 
 
             // 접속을 받을 최대 동접 숫자 :
@@ -46,7 +50,7 @@ namespace Server.User
             stub.server_move = (ZNet.RemoteID remote, ZNet.CPackOption pkOption, int server_type) =>
             {
                 // 유효한 유저인지 확인
-                NetServerCommon.CUser rc;
+                CUser rc;
                 if (RemoteClients.TryGetValue(remote, out rc) == false) return true;
                 if (rc.joined == false) return true;    // 인증여부 확인
 
@@ -96,8 +100,8 @@ namespace Server.User
                 // 서버이동으로 입장한 경우
                 if (move_server.Count > 0)
                 {
-                    NetServerCommon.CUser rc;
-                    NetServerCommon.Common.UserDataMove_Complete(move_server, out rc);
+                    CUser rc;
+                    UserData.UserDataMove_Complete(move_server, out rc);
 
                     form.printf("move server complete  {0} {1} {2} {3}", rc.data.userID, rc.data.money_cash, rc.data.money_game, rc.data.temp);
                     RemoteClients.Add(remote, rc);
@@ -107,7 +111,7 @@ namespace Server.User
                     if (this.Type == UnityCommon.Server.Login)
                     {
                         // 로그인 서버에서만 일반입장을 허용
-                        NetServerCommon.CUser rc = new NetServerCommon.CUser();
+                        CUser rc = new CUser();
                         rc.data.userID = Guid.Empty;
                         rc.data.temp = "최초입장_인증받기전";
                         RemoteClients.Add(remote, rc);
@@ -127,11 +131,11 @@ namespace Server.User
                 // 서버 이동중이 아닌상태에서 퇴장하는 경우 로그아웃에 대한 처리를 해줍니다
                 if (bMoveServer == false)
                 {
-                    NetServerCommon.CUser rc;
+                    CUser rc;
                     if (RemoteClients.TryGetValue(remote, out rc))
                     {
                         form.printf("[DB로그아웃] 처리, user {0}\n", rc.data.userName);
-                        if (NetServerCommon.Var.Use_DB)
+                        if (Var.Use_DB)
                         {
                             Task.Run(() =>
                             {
@@ -157,11 +161,11 @@ namespace Server.User
             // ---> 이때 확실하게 로그아웃 처리를 마무리 해줄 필요가 있음
             m_Core.move_server_failed_handler = (ZNet.ArrByte move_server) =>
             {
-                NetServerCommon.CUser rc;
-                NetServerCommon.Common.UserDataMove_Complete(move_server, out rc);
+                CUser rc;
+                UserData.UserDataMove_Complete(move_server, out rc);
 
                 form.printf("[DB로그아웃] 서버이동을 실패한 경우에 대한 마무리 처리, user {0}\n", rc.data.userName);
-                if (NetServerCommon.Var.Use_DB)
+                if (Var.Use_DB)
                 {
                     Task.Run(() =>
                     {
@@ -182,7 +186,7 @@ namespace Server.User
             m_Core.move_server_start_handler = (ZNet.RemoteID remote, out ZNet.ArrByte buffer) =>
             {
                 // 해당 유저의 유효성 체크
-                NetServerCommon.CUser rc;
+                CUser rc;
                 if (RemoteClients.TryGetValue(remote, out rc) == false)
                 {
                     buffer = null;
@@ -200,7 +204,7 @@ namespace Server.User
                 rc.data.temp = this.Name;
 
                 // 동기화 할 유저 데이터를 구성하여 buffer에 넣어둔다 -> 이동 목표 서버에서 해당 데이터를 그대로 받게된다
-                NetServerCommon.Common.UserDataMove_Start(rc, out buffer);
+                UserData.UserDataMove_Start(rc, out buffer);
 
                 form.printf("move server start  {0} {1} {2} {3}", rc.data.userID, rc.data.money_cash, rc.data.money_game, rc.data.temp);
             };
@@ -248,8 +252,8 @@ namespace Server.User
             base.AfterStart();
 
             m_Core.MasterConnect(
-                NetServerCommon.MasterServerConnect.master_ipaddr,
-                NetServerCommon.MasterServerConnect.master_portnum,
+                Properties.Settings.Default.MasterIp,
+                Properties.Settings.Default.MasterPort,
                 this.Name,
                 (int)this.Type
                 );

@@ -117,6 +117,25 @@ namespace Client
             bool run_program = true;
 
 
+            bool test = false;
+            if (test)
+            {
+                Client.m_Core.Connect(UnityCommon.Join.ipaddr, UnityCommon.Join.portnum, UnityCommon.Join.protocol_ver);
+                Console.WriteLine("Connect to server ({0}:{1}) ...", UnityCommon.Join.ipaddr, UnityCommon.Join.portnum);
+
+                while (true)
+                {
+                    Client.m_Core.Leave();
+                    Client.m_Core.NetLoop();
+
+                    Client.m_Core.ReConnect();
+                    Client.m_Core.NetLoop();
+
+                    System.Threading.Thread.Sleep(1);
+                }
+            }
+
+
             // 프로그램 종료시까지 명령어 받고.. 네트워크 관련 처리하고.. 무한 반복
             while (run_program)
             {

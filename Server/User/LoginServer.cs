@@ -19,15 +19,6 @@ namespace Server.User
             base.BeforeStart(out param);
 
 
-            // 접속을 받을 IP
-            param.m_IpAddressListen = UnityCommon.Join.ipaddr;
-
-
-            // 접속을 받을 포트
-            param.m_PortListen = UnityCommon.Join.portnum;
-
-
-
             // 클라이언트에게 받은 메세지
             stub.Chat = (ZNet.RemoteID remote, ZNet.CPackOption pkOption, string txt) =>
             {
@@ -44,13 +35,13 @@ namespace Server.User
             stub.request_Login = (ZNet.RemoteID remote, ZNet.CPackOption pkOption, string name, string pass) =>
             {
                 // 유효한 유저인지 확인
-                NetServerCommon.CUser rc;
+                CUser rc;
                 if (RemoteClients.TryGetValue(remote, out rc) == false) return true;
 
 
                 Action LoginAsync = async () =>
                 {
-                    NetServerCommon.UserDataSync dummy = new NetServerCommon.UserDataSync();
+                    UserDataSync dummy = new UserDataSync();
 
                     var result = await Task.Run(() =>
                     {
@@ -145,7 +136,7 @@ namespace Server.User
                     return;
                 };
 
-                if (NetServerCommon.Var.Use_DB)
+                if (Var.Use_DB)
                 {
                     // 로그인 DB 인증 비동기 방식으로 실행
                     LoginAsync.Invoke();
@@ -169,7 +160,7 @@ namespace Server.User
 }
 
 
-// SQL 테이블 생성 스크립트 : NetServerCommon.Use_DB 항목 사용할때 필요
+// SQL 테이블 생성 스크립트 : Use_DB 항목 사용할때 필요
 /*
 USE[TestDB]
 GO

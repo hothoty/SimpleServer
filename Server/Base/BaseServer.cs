@@ -14,6 +14,9 @@ namespace Server.Base
         string name;
 
 
+        ZNet.NetAddress listenAddr = new ZNet.NetAddress();
+
+
         public FormServer form;
 
 
@@ -38,12 +41,20 @@ namespace Server.Base
             get { return type; }
         }
 
+        public ZNet.NetAddress ListenAddr
+        {
+            get { return listenAddr; }
+        }
+
 
         public BaseServer(FormServer f, UnityCommon.Server s, int portnum)
         {
             this.form = f;
             this.type = s;
             this.name = string.Format("{0}-{1}", s, portnum);
+
+            listenAddr.m_ip = Server.Properties.Settings.Default.ListenIp;
+            listenAddr.m_port = (ushort)portnum;
         }
 
         ~BaseServer()
