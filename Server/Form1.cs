@@ -78,6 +78,7 @@ namespace Server
         private void timer1_Tick(object sender, EventArgs e)
         {
             // net thread process
+            svr.m_Core.NetLoop();
         }
 
         private void FormServer_Load(object sender, EventArgs e)

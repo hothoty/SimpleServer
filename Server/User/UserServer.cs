@@ -42,6 +42,10 @@ namespace Server.User
             param.m_ProtocolVersion = UnityCommon.Join.protocol_ver;
 
 
+            // 내부 스레드 사용을 중단 
+            param.m_LogicThreadCount = 0;
+
+
             // 클라이언트의 반응이 없을경우 내부적으로 접속을 해제시킬 시간을 설정합니다(초단위)
             m_Core.SetKeepAliveOption(30);
 
