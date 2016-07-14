@@ -60,8 +60,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="ZNetW, Version=1.0.6034.38086, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\ZNetW64.1.0.13\lib\net45\ZNetW.dll</HintPath>
+    <Reference Include="ZNetW, Version=1.0.6039.38976, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\ZNetW64.1.0.14\lib\net45\ZNetW.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

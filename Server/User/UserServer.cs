@@ -215,20 +215,20 @@ namespace Server.User
 
 
             // 마스터 서버에 입장 성공한 이벤트
-            m_Core.server_master_join_hanlder = (ZNet.RemoteID remote, ZNet.RemoteID myRemoteID) =>
+            m_Core.server_master_join_handler = (ZNet.RemoteID remote, ZNet.RemoteID myRemoteID) =>
             {
                 form.printf(string.Format("마스터서버에 입장성공 remoteID {0}", myRemoteID));
             };
 
             // 마스터 서버에 퇴장된 이벤트
-            m_Core.server_master_leave_hanlder = () =>
+            m_Core.server_master_leave_handler = () =>
             {
                 form.printf(string.Format("마스터서버와 연결종료!!!"));
                 form.Close();    // 마스터 서버를 종료하면 모든 서버 프로그램이 자동 종료처리 되게 하는 내용...
             };
 
             // 마스터 서버에 연결된 모든 서버들로부터 주기적으로 자동 받게되는 정보
-            m_Core.server_refresh_hanlder = (ZNet.MasterInfo master_info) =>
+            m_Core.server_refresh_handler = (ZNet.MasterInfo master_info) =>
             {
                 //form.printf(string.Format("서버P2P remote:{0} type:{1}[{2}] current:{3} addr:{4}:{5}",
 
