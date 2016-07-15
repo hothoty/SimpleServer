@@ -34,6 +34,17 @@ public class CMain : MonoBehaviour {
         stub = new Rmi.Stub();
     }
 
+    public void printf(string txt, params object[] args)
+    {
+        printf(string.Format(txt, args));
+    }
+
+    void printf(string txt)
+    {
+        this.received_texts.Add(txt);
+        this.currentScrollPos.y = float.PositiveInfinity;
+    }
+
 	void Start()
 	{
 		this.m_Core = new CoreClientNet();
@@ -43,16 +54,14 @@ public class CMain : MonoBehaviour {
         // 서버가 보낸 로그인인증 결과패킷을 처리합니다
         stub.reponse_Login = (ZNet.RemoteID remote, ZNet.CPackOption pkOption, bool bResult) =>
         {
-            this.received_texts.Add("로그인 인증 결과" + bResult);
-            this.currentScrollPos.y = float.PositiveInfinity;
+            printf("로그인 인증 결과" + bResult);
             return true;
         };
 
         // 서버로부터 받은 메세지
         stub.Chat = (ZNet.RemoteID remote, ZNet.CPackOption pkOption, string txt) =>
         {
-            this.received_texts.Add(txt);
-            this.currentScrollPos.y = float.PositiveInfinity;
+            printf(txt);
             return true;
         };
 
@@ -60,8 +69,7 @@ public class CMain : MonoBehaviour {
         // 서버이동 시도에 대한 실패 이벤트
         m_Core.move_fail_handler = () =>
         {
-            this.received_texts.Add("서버이동 처리가 실패하였습니다.");
-            this.currentScrollPos.y = float.PositiveInfinity;
+            printf("서버이동 처리가 실패하였습니다.");
         };
 
 
@@ -72,15 +80,13 @@ public class CMain : MonoBehaviour {
             {
                 // 서버이동이 성공한 시점 : 위치를 목표했던 서버로 설정
                 server_now = server_tag;
-                this.received_texts.Add(string.Format("서버이동성공 [{0}:{1}] {2}", info.addr.m_ip, info.addr.m_port, server_now));
-                this.currentScrollPos.y = float.PositiveInfinity;
+                printf("서버이동성공 [{0}:{1}] {2}", info.addr.m_ip, info.addr.m_port, server_now);
             }
             else
             {
                 // 최초 입장의 성공시점 : 위치를 로그인 서버로 설정
                 server_now = UnityCommon.Server.Login;
-                this.received_texts.Add(string.Format("서버입장성공 {0}", server_now));
-                this.currentScrollPos.y = float.PositiveInfinity;
+                printf("서버입장성공 {0}", server_now);
 
                 // 최초 로그인 DB인증 시도 요청
                 proxy.request_Login(ZNet.RemoteID.Remote_Server, ZNet.CPackOption.Basic, "철수", "abcd");
@@ -92,13 +98,12 @@ public class CMain : MonoBehaviour {
         {
             if (info.moved)
             {
-                this.received_texts.Add(string.Format("서버이동을 위해 퇴장, 이동할서버 [{0}:{1}]", info.addr.m_ip, info.addr.m_port));
-                this.currentScrollPos.y = float.PositiveInfinity;
+                printf("서버이동을 위해 퇴장, 이동할서버 [{0}:{1}]", info.addr.m_ip, info.addr.m_port);
             }
             else
             {
-                this.received_texts.Add(string.Format("서버퇴장성공"));
-                this.currentScrollPos.y = float.PositiveInfinity;
+                printf("서버퇴장성공");
+
             }
 
 
@@ -111,13 +116,11 @@ public class CMain : MonoBehaviour {
         {
             if (isConnectSuccess)
             {
-                this.received_texts.Add("Connected!");
-                this.currentScrollPos.y = float.PositiveInfinity;
+                printf("Connected!");
             }
             else
             {
-                this.received_texts.Add("Connect Fail!");
-                this.currentScrollPos.y = float.PositiveInfinity;
+                printf("Connect Fail!");
             }
         };
 
@@ -125,13 +128,11 @@ public class CMain : MonoBehaviour {
         {
             string str_msg = "Msg : ";
             str_msg += result.msg;
-            this.received_texts.Add(str_msg);
-            this.currentScrollPos.y = float.PositiveInfinity;
+            printf(str_msg);
         };
 
 
-        this.received_texts.Add("프로그램 시작");
-        this.currentScrollPos.y = float.PositiveInfinity;
+        printf("프로그램 시작");
 
         // 최초 로그인 시도
         m_Core.Connect(
